@@ -1,0 +1,41 @@
+{
+  "name": "electron",
+  "productName" : "ElectroPulse",
+  "version": "1.0.0",
+  "description": "Se muestra un gráfico resultante de aplicacar uno o varios pulsos.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"electron main.js",
+    "build": "electron-builder"
+  },
+  "author": "Angie <ccorrea@einsted.bio>",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^22.0.3",
+    "electron-builder": "latest"
+  },
+
+  "build": {
+    "appId": "ElectroPulse",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "snap"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "nsis-web",
+        "portable",
+        "squirrel",
+        "msi"
+      ]
+   }
+  }
+}

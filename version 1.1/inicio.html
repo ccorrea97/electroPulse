@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./styles/estilo.css">
+    <title>Einsted - Electroporator</title>
+</head>
+
+<body>
+    <header class="ipConfiguration">
+        <a href="./index.html"><img src="./image/ElectroPulso-icon.png" class="image-logo" /></a>
+        <button class="buttonIP" onclick="ipconfig()" id="configuracion"><img src="./image/configuraciones.png"/></button>
+    </header>
+    <section class="waveElectroporador" id="sectionWave">
+        <div class="item-1">
+            <div id="waveGraphic">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <div class="item-2">
+            <form id="formElem">
+                <div class="boxInput">
+                    <img src="./image/ton-time.png" class="opcion-input">
+                    <input class="inputName" id="ton" name="ton" type="text" placeholder="[ns]">
+                </div>
+                <div class="boxInput">
+                    <img src="./image/toff-time.png" class="opcion-input">
+                    <input class="inputName" id="toff" name="toff" type="text" placeholder="[us]">
+                </div>
+                <div class="boxInput">
+                    <img src="./image/pulses-time.png" class="opcion-input">
+                    <input class="inputName" id="pulso" name="pulsos" type="text" placeholder="times">
+                </div>
+                <div class="boxInput">
+                    <img src="./image/repeticion-time.png" class="opcion-input">
+                    <input class="inputName" id="repeticion" name="repeticion" type="text" placeholder="times">
+                </div>
+                <div class="boxInput">
+                    <img src="./image/separation-time.png" class="opcion-input">
+                    <input class="inputName" id="separacion" name="separacion" type="text" placeholder="[us]">
+                </div>
+                <br>
+                <button type="submit" class="btn-1" onClick="updatey()" onmousedown="sonido.play()"></button>
+                <button class="btn-2"></button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <div class="componentStatus">
+            <div id="myDiv">
+            </div>
+            <p id="text">Disconneted</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/logic.js"></script>
+
+</body>
+
+</html>

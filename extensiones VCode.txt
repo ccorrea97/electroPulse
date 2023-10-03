@@ -1,0 +1,31 @@
+Name: HTML Snippets
+Id: abusaidm.html-snippets
+Description: Full HTML tags including HTML5 Snippets
+Version: 0.2.1
+Publisher: Mohamed Abusaid
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=abusaidm.html-snippets
+
+
+Name: HTML CSS Support
+Id: ecmel.vscode-html-css
+Description: CSS Intellisense for HTML
+Version: 1.13.1
+Publisher: ecmel
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ecmel.vscode-html-css
+
+
+Name: JavaScript (ES6) code snippets
+Id: xabikos.JavaScriptSnippets
+Description: Code snippets for JavaScript in ES6 syntax
+Version: 1.8.0
+Publisher: charalampos karypidis
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets
+
+Name: Live Server
+Id: ritwickdey.LiveServer
+Description: Launch a development local Server with live reload feature for static & dynamic pages
+Version: 5.7.9
+Publisher: Ritwick Dey
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+
+

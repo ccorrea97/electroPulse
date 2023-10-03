@@ -1,0 +1,9 @@
+// Añadir log usuario 
+// guardar archivo 
+//configuraciones seteadas
+//sacar promedio medio y metricas estadisticas
+// graficar pulsos de sensado 
+//probar con valores de datos de grandes volumenes
+//poder elegir la carpeta 
+//crear una carpeta 
+//elegir que carpeta selecionar 
