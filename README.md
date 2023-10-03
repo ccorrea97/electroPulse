@@ -1,8 +1,8 @@
-# App_Einsted
+# ElectroPulse
 
-IDE utilizado Visual Code 
+IDE utilizado Visual Studio Code 
 
-En la carpeta denominada "Versión 1.1", se encuentra el contenido correspondiente al software de Einsted, diseñado para el controlador del electroporador Nanopulso y desarrollado en el framework Electron JS .
+En la carpeta denominada "Versión 1.1", se encuentra el contenido correspondiente al software de Einsted, diseñado para el controlador del electroporador Nanopulso y desarrollado en el framework Electron JS.
 
 -La carpeta "image" contiene las imágenes utilizadas en el diseño del software.
 
@@ -10,26 +10,41 @@ En la carpeta denominada "Versión 1.1", se encuentra el contenido correspondien
 
 -La carpeta "styles" contiene los estilos aplicados a los archivos index.html e inicio.html.
 
--instalar:
+# Setup
+
+Recomendado usar la terminal (tanto en Linux/macOS como en Windows).
+
+Primero instalar Node.js (recomiendo con nvm, que permite manejar distintas versiones). Tener en cuenta que al instalarse Node.js, se instala npm que es un manejador de paquetes. Se utiliza npm para hacer las siguiente instalaciones. 
+
+Instalar Electron.js (con npm install [...biblioteca-que-corresponda]), lo mismo con Chart.js.
+
+Si no se tiene Python instalado, instalar también Python.
+
+# Ejecutar la aplicación
+
+Antes que nada se deben instalar todas las dependencias. Para esto, moverse hasta el directorio 'version 1.1' y ejecutar:
 
 npm install
 
--run:
+Ahora sí, en el mismo directorio, ejecutar:
 
 npm start
 
--Sugerencias: 
+Sugerencias: 
+Preparar VS Code con las extensiones correspondientes para el debugging (Live Server, etc.)
 
--Tener instalado node js ( https://nodejs.org/es ) y electron js (https://www.electronjs.org/es/) 
+-extensiones VCode.txt
 
--extensiones VCode.txt 
+# Crear un archivo ejecutable (Linux)
+
+npm run build
 
 |pantalla 1920x1080 "
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #Diseño de la versión 2.0 :
 
-Actualizaciones agregar se encuentra en la carpeta desing
+Actualizaciones agregar se encuentra en la carpeta design
 
 figma (finalizado):
 
