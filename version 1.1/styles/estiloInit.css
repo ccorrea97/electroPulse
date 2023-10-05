@@ -1,28 +1,37 @@
+/*TODO: Improve responsiveness, maybe limiting the min size will be enough*/
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
-*{
-    margin: 0; }
-p{
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ p {
     font-family: 'Inter', sans-serif;
     padding-bottom: 20px;
     color:#545454;
     text-align: center;
     padding-left: 50px;
 }
+
 .panelPresentation {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 890px;
     background:#EFEFEF;
     overflow: hidden;
     transition: all 1s;
   }
 
-
-.panelPresentation .item-1{
+.panelPresentation .item-1 { 
     background:#EFEFEF;
     display: inline-block;
+    width: 100%;
+    height: 100%;
 }
-.icon-1{
+
+.icon-1 {
     width:80px;
     height: 80px;
     margin-left: 800px;
@@ -58,8 +67,9 @@ p{
     100% { 
         opacity: 0.6;
     }
-  }
-.icon-2{
+}
+
+.icon-2 {
     width:60px;
     margin-left: 100px;
     opacity: 0.6;
@@ -68,7 +78,8 @@ p{
     transition: all 1s;
     animation-name: slidein;
 }
-.icon-3{
+
+.icon-3 {
     width:60px;
     height: 60px;
     margin-left: 400px;
@@ -78,7 +89,8 @@ p{
     transition: all 1s;
     animation-name: slidein;
 }
-.icon-4{
+
+.icon-4 {
     width:60px;
     height: 60px;
     margin-left: 200px;
@@ -88,7 +100,8 @@ p{
     transition: all 1s;
     animation-name: slidein4;
 }
-.icon-5{
+
+.icon-5 {
     width:60px;
     height: 60px;
     margin-left: 600px;
@@ -98,6 +111,7 @@ p{
     transition: all 1s;
     animation-name: slidein4;
 }
+
 @keyframes slidein4 {
     0% { 
         opacity: 0;
@@ -124,8 +138,9 @@ p{
         opacity: 0.39;
     }
   }
-.namePresentation{
-    width:810px;
+
+.namePresentation {
+    width: 810px;
     height: 95px;
     margin-left: 60px;
     margin-top: 100px;
@@ -133,6 +148,7 @@ p{
     transition: all 1s;
     animation-name: slidein2;
 }
+
 @keyframes slidein2 {
     0% { 
         opacity: 0;
@@ -166,16 +182,17 @@ p{
         opacity: 1;
 
     }
-  }
-#titleBox{
+}
+
+#titleBox {
     margin-top: 50px;
     margin-left: -20px;
-
     height: 79px;
     width: 950px;
     text-align: center;
 }
-#titlePrincipal{
+
+#titlePrincipal {
     font-size: 35px;
     overflow: hidden;
     white-space: nowrap;
@@ -183,6 +200,7 @@ p{
     border-right: 0.1em solid #007da0;
     animation: typing 4s steps(38) 1s 1 normal both, blink 1s steps(1) infinite;
 }
+
 @keyframes typing {
     from {
       width: 0;
@@ -193,17 +211,20 @@ p{
       width: 40%;
       border:rgb(255, 255, 255)
     }
-  }
-  @keyframes blink {
+}
+
+@keyframes blink {
     50% {
       border-color: transparent;
     }
-  }
-  .panelPresentation  .item-2{
+}
+
+.panelPresentation  .item-2 {
     background:#EFEFEF;
     overflow: hidden;
 }
-.buttonNext{
+
+.buttonNext {
     height:1200px;
     width: 1400px;
     background: linear-gradient(0deg, rgba(23,118,189,1) 0%, rgba(111,194,157,1) 52%, rgba(141,198,63,1) 100%);
@@ -216,25 +237,30 @@ p{
     animation-name: slidein;
     border-radius: 1200px;
 }
-.pulseInput{
+
+.pulseInput {
     height:280px;
     width:320px;
     margin-left:140px;
     margin-top:500px;
 }
-.logoInput{
+
+.logoInput {
     height:20px;
     width:120px;
     margin-left:370px;
     margin-bottom: -210px;
 }
-a{
+
+a {
     text-decoration: none;
 }
-label{
+
+label {
     text-shadow: 1px 1px 2px rgb(255, 255, 255), 0 0 1em rgb(254, 254, 255), 0 0 0.2em rgb(255, 255, 255);
 }
-.buttonInput{
+
+.buttonInput {
     color:white;
     font-family:  'Inter', sans-serif;
     font-size: 40px;
@@ -242,7 +268,8 @@ label{
     margin-left:-850px;
     margin-bottom: 10px;
 }
-.buttonNext:hover{
+
+.buttonNext:hover {
     height:1200px;
     width: 1400px;
     background: linear-gradient(0deg, rgba(23,118,189,1) 0%, rgba(111,194,157,1) 52%, rgba(141,198,63,1) 100%);
@@ -255,4 +282,90 @@ label{
     animation-name: slidein;
     border-radius: 1200px;
     box-shadow: 10px 10px 10px 10px #545454;
+}
+
+
+@media screen and (max-width: 1520px) {
+    .panelPresentation {
+        grid-template-columns: 60% 40%;
+    }
+
+    .icon-1 {
+        width:80px;
+        height: 80px;
+        margin-left: 65%;
+        margin-top: 40px;
+        opacity: 0.6;
+        animation-duration: 5s;
+        transition: all 1s;
+        animation-name: slidein;
+    }
+
+    .icon-2 {
+        width:60px;
+        margin-left: 100px;
+        opacity: 0.6;
+        height: 60px;
+        animation-duration: 6s;
+        transition: all 1s;
+        animation-name: slidein;
+    }
+    
+    .icon-3 {
+        width:60px;
+        height: 60px;
+        margin-left: 45%;
+        margin-top: 40px;
+        opacity: 0.6;
+        animation-duration: 6s;
+        transition: all 1s;
+        animation-name: slidein;
+    }
+    
+    .icon-4 {
+        width:60px;
+        height: 60px;
+        margin-left: 200px;
+        margin-top: 40px;
+        opacity: 0.39;
+        animation-duration: 6s;
+        transition: all 1s;
+        animation-name: slidein4;
+    }
+    
+    .icon-5 {
+        width:60px;
+        height: 60px;
+        margin-left: 600px;
+        margin-top: 20px;
+        opacity: 0.39;
+        animation-duration: 6s;
+        transition: all 1s;
+        animation-name: slidein4;
+    }
+
+    .namePresentation {
+        width: 500px;
+        height: 95px;
+        margin-left: 60px;
+        margin-top: 100px;
+        animation-duration: 3s;
+        transition: all 1s;
+        animation-name: slidein2;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .panelPresentation {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .icon-1,
+    .icon-2,
+    .icon-3,
+    .icon-4,
+    .icon-5 {
+        width: 40px;
+        height: 40px;
+    }
 }
