@@ -6,11 +6,11 @@ const url  = require('url')
 let win
 
 function createWindow(){
-	win = new BrowserWindow ({ //el problema no es en sí el tamaño de la pantalla, sino que el contenido no es responsive
+	win = new BrowserWindow ({ 
 		
 		width: 1300,
     	height: 890, 
-    	minWidth: 1300,
+    	minWidth: 1100,
     	minHeight: 890,
 		maxWidth: 1920,
     	maxHeight: 1080,
@@ -30,10 +30,6 @@ function createWindow(){
 	win.removeMenu();
 	win.setMenu(null);           // Elimina el menu de la aplicación
 
-	// win.webContents.openDevTools()
-
-
-
-	
+	// win.webContents.openDevTools()	
 }
 app.on('ready', createWindow)
