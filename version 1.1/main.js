@@ -6,14 +6,15 @@ const url  = require('url')
 let win
 
 function createWindow(){
-	win = new BrowserWindow ({
-		width: 1480,
-    	height: 925,
-    	minWidth: 1480,
-    	minHeight: 950,
-		maxWidth: 1480,
-    	maxHeight: 950,
-		frame:true,      // quita los bordes en la ventana
+	win = new BrowserWindow ({ 
+		
+		width: 1300,
+    	height: 890, 
+    	minWidth: 1100,
+    	minHeight: 890,
+		maxWidth: 1920,
+    	maxHeight: 1080,
+		frame: true,      // quita los bordes en la ventana
 		transparent: false, // hace la ventana trasparente
 
     	webPreferences: {
@@ -29,10 +30,6 @@ function createWindow(){
 	win.removeMenu();
 	win.setMenu(null);           // Elimina el menu de la aplicación
 
-	//win.webContents.openDevTools()
-
-
-
-	
+	// win.webContents.openDevTools()	
 }
 app.on('ready', createWindow)
