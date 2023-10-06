@@ -14,7 +14,7 @@ En la carpeta denominada "Versión 1.1", se encuentra el contenido correspondien
 
 Recomendado usar la terminal (tanto en Linux/macOS como en Windows).
 
-Primero instalar Node.js (recomiendo con nvm, que permite manejar distintas versiones). Tener en cuenta que al instalarse Node.js, se instala npm que es un manejador de paquetes. Se utiliza npm para hacer las siguiente instalaciones. 
+Primero instalar Node.js (recomiendo con nvm, que permite manejar distintas versiones). Tener en cuenta que al instalarse Node.js, se instala npm que es un manejador de paquetes. Se utiliza npm para hacer las siguientes instalaciones. 
 
 Instalar Electron.js (con npm install [...biblioteca-que-corresponda]), lo mismo con Chart.js.
 
@@ -33,9 +33,9 @@ npm start
 Sugerencias: 
 Preparar VS Code con las extensiones correspondientes para el debugging (Live Server, etc.)
 
--extensiones VCode.txt
+-extensiones VCode.txt (Angie)
 
-# Crear un archivo ejecutable (Linux)
+# Crear un archivo ejecutable
 
 npm run build
 
@@ -62,4 +62,4 @@ https://www.figma.com/file/raj7aIOXpUMuRkGqP5z59x/Diagrama-de-flujos-Electropora
 
 Se encuentra una aplicación realizada en python para extraer datos del osciloscopio RIGOL DSO138. 
 
-Sugerencia: instalar la libreria pyvisa
+Sugerencia: instalar la biblioteca pyvisa

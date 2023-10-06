@@ -7,7 +7,7 @@ var newdatay = [0, 800, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800
 ton = parseInt(ton)
 toff = parseInt(toff)
 pulso = parseInt(pulso)
-    ///////////////////////////sonido/////////////////////////////////7
+    ///////////////////////////sonido/////////////////////////////////
 var sonido = new Audio();
 sonido.src = "pip.mp3";
 var status = 0
@@ -135,7 +135,7 @@ var chart = new Chart(ctx, {
     data: data,
     options: opcions
 });
-/////////////////////////////////////////////////////////////////////////7
+///////////////////////////////////////////////////////////////////////// POST TO THE IP /////////////////////////////////////////
 //Recarga
 function updatey() {
     formElem.onsubmit = async(e) => {
@@ -145,11 +145,7 @@ function updatey() {
             method: 'POST',
             body: new FormData(formElem)
         });
-        // console.log(formData)
-
-        // let result = await response.json();
-
-        //alert(result.message);
+        console.log(response)
     };
     newlabels = [0]
     ton = document.getElementById('ton').value
@@ -158,7 +154,7 @@ function updatey() {
     toff = parseInt(toff)
     ton = parseInt(ton)
     pulso = parseInt(pulso)
-        ///////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////// TODO: Delete this, replace for the actual graphic charts
     for (var p = 1; p <= pulso; p++) {
         A = (ton * (p - 1)) + toff * (p - 1)
         B = (ton * (p - 1)) + (toff * (p - 1) + 1)
@@ -172,23 +168,23 @@ function updatey() {
     newlabels.push((ton + toff) * 50)
         /////////////////////////////////////////7
     if (ton <= 100 && pulso == 1) {
-        newdatay = [0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 0] //ejey
-        newlabels = [-1, 0, ton, ton, ton + 1, (ton + toff) * 50] //ejex
+        newdatay = [0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 0] //eje y 
+        newlabels = [-1, 0, ton, ton, ton + 1, (ton + toff) * 50] //eje x
     } else if (ton > 100 && pulso == 1) {
-        newlabels = [-1, 0, ton, ton, ton + 1, (ton + toff) * 50] //ejex
+        newlabels = [-1, 0, ton, ton, ton + 1, (ton + toff) * 50] //eje x
     } else if (ton >= 1 && pulso > 1) {
         newlabels
     } else if (pulso == 0) {
         newlabels = []
     }
-    //////////////////////////////////////////////////////////7
+    //////////////////////////////////////////////////////////
     newdatay = [0, 800, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0, 800, 800, 0, 0] //ejey
         //llamo al objeto
     chart.data.datasets[0].data = newdatay; //selecciono el primer data set data de eje y
     chart.data.labels = newlabels //seleciono los labels eje x
     chart.update(); //recargo al grafico con la funcion
-    //console.log(newdatay)
-    //console.log(newlabels)
+    // console.log(newdatay)
+    // console.log(newlabels)
 };
 
 function ipconfig() {
