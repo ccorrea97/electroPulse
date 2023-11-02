@@ -1,24 +1,19 @@
-from tkinter import Tk
-from mainFrame import MainFrame
-import tkinter
+from mainWindow import MainWindow
+
 def main():
-        root = Tk()
-        root.wm_title("Osciloscope Real Time")
-        root.geometry('1600x550')
-        app= MainFrame(root)
-        
+        app = MainWindow()
+
         def call_update():
                 global update, update_after
                 update_test()
 
         def update_test():
                 global update, update_after
-                app.animate_osc()
-                update_after = root.after(100, update_test)
-                #poned el tiempo que desee
+                app.draw_graphic()
+                update_after = app.after(100, update_test)
+
         call_update()
         app.mainloop()
 
-if __name__ == '__main__':
+if __name__ == '__main__': 
         main()
-
