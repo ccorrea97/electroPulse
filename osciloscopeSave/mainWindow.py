@@ -123,8 +123,8 @@ class MainWindow(Tk):
         axs.tick_params(axis='x', colors='darkblue')
         axs.tick_params(axis='y', colors='darkblue')
         plt.title("RIGOL MSO8204 Real Time", color= 'darkblue', size=18, family="Arial")
-        plt.xlabel("Channel 2", color= 'darkblue', size=18, family="Arial")
-        plt.ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
+        plt.xlabel("Channel 1", color= 'darkblue', size=18, family="Arial")
+        plt.ylabel("Channel 2", color= 'darkblue', size=18, family="Arial")
 
         self.plasma_curve1, = axs.plot([], [], color='darkblue')
 
@@ -211,33 +211,6 @@ class MainWindow(Tk):
         self.canvas5.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
         
         #################
-    #     self.canvas
-    #     self.fig5, ax = plt.subplots()
-    #     self.total_energy_curve = None
-    #     self.build_subplot(self.canvas, self.fig5, ax, self.total_energy_curve, self.frame_total_energy, -10, 20, 0, 5e-09)
-
-    # def build_subplot(self, canvas, fig, ax, line, frame, limy1, limy2, limx1, limx2):
-    #     #Color de fondo
-    #     #ax2.set_ylim(-100, 1000) -original
-    #     ax.set_ylim(limy1, limy2) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
-    #     ax.set_xlim(limx1, limx2)
-    #     fig.patch.set_facecolor('lightblue')
-    #     #Contorno de grafico
-    #     ax.spines['bottom'].set_color('darkblue')
-    #     ax.spines['top'].set_color('darkblue')
-    #     ax.spines['left'].set_color('darkblue')
-    #     ax.spines['right'].set_color('darkblue')
-    #     #Color de ejes
-    #     ax.tick_params(axis='x', colors='darkblue')
-    #     ax.tick_params(axis='y', colors='darkblue')
-    #     plt.title("RIGOL MSO8204 Real Time", color= 'darkblue', size=18, family="Arial")
-    #     plt.xlabel("Time [ns]", color= 'darkblue', size=18, family="Arial")
-    #     plt.ylabel("Voltage [V]", color= 'darkblue', size=18, family="Arial")
-
-    #     line, = ax.plot([], [], color='darkblue')
-
-    #     canvas = FigureCanvasTkAgg(fig, master = frame)
-    #     canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
 
     def open_oscilloscope(self):
         resource_manager = visa.ResourceManager()
@@ -255,25 +228,18 @@ class MainWindow(Tk):
         instruments = resource_manager.list_resources()
         usb = list(filter(lambda x: 'USB' in x, instruments))       
 
-    def draw_graphic(self):
+    def draw_graphic(self): # TODO: hacer una función con parámetros para evitar la repetición de código
         
         self.myScope.write(":WAVEFORM:FORMAT ASCII") #Para tener el encoding correcto
-        # Puedo tener esta función como principal y separar en funciones específicas para traer los datos de cada curva
+        
 
-        ############### Curva 2 (ch1 vs ch2 - (y, x)) #TODO: poner los datos reales, ahora está genérica
+        ############### Curva Plasma 2 (Toma el ch1 como 'y' y ch2 como 'x' - (y, x))
         self.myScope.write("WAV:SOUR CHAN1")
 
         data1 = self.myScope.query("WAV:DATA?") #Datos extraidos
         #print(data) #TODO: eliminar
         data1 = data1.split(',')
         data1 = list(data1)
-
-        #No queremos que divida por cero
-        try:
-            assert (len(data1) > 0), "No se tomaron datos."
-        except Exception as e:
-            print(e)
-        
         data1 = data1[10:len(data1)-1]
         muestra = np.array(data1)
         lista_sample = []
@@ -290,20 +256,13 @@ class MainWindow(Tk):
         self.plasma_curve2.set_data(x, y)
         ###############
 
-        ############### Curva 1 (ch2 vs ch1 - (y, x)) #TODO: poner los datos reales, ahora está genérica
+        ############### Curva Plasma 1 (Toma el ch2 como 'y' y el ch1 como 'x' - (y, x))
         self.myScope.write("WAV:SOUR CHAN2")
 
         data1 = self.myScope.query("WAV:DATA?") #Datos extraidos
         #print(data) #TODO: eliminar
         data1 = data1.split(',')
         data1 = list(data1)
-
-        #No queremos que divida por cero
-        try:
-            assert (len(data1) > 0), "No se tomaron datos."
-        except Exception as e:
-            print(e)
-        
         data1 = data1[10:len(data1)-1]
         muestra = np.array(data1)
         lista_sample = []
@@ -320,29 +279,12 @@ class MainWindow(Tk):
         self.plasma_curve1.set_data(x, y)
         ###############
 
-
-        self.myScope.write(":WAVEFORM:FORMAT ASCII") #Para tener el encoding correcto
-        # self.myScope.write(":CHAN1:DISP OFF")
-        # self.myScope.write(":CHAN2:DISP ON")
-        self.myScope.write("WAV:SOUR CHAN2") #Esto funciona, ahora hay que tomar el 'x' de acá y el 'y' del CH 1 pra obtener la curva de plasma 2
-        data = self.myScope.query("WAV:DATA?") #Datos extraidos
-        #print(data) #TODO: eliminar
+        ############### Genérico para los otros tres gráficos que falta armar
+        self.myScope.write("WAV:SOUR CHAN2")
+        data = self.myScope.query("WAV:DATA?")
         data = data.split(',')
         data = list(data)
-        
-        #print(channel1)
-
-        # self.myScope.write(":MATH1:OPER ADD")
-        # self.myScope.write(":MATH1:FSRC CHAN1,CHAN2")
-        # self.myScope.write(":CHAN1:DISP ON")
-
-        #No queremos que divida por cero
-        try:
-            assert (len(data) > 0), "No se tomaron datos."
-        except Exception as e:
-            print(e)
-        
-        data = data[10:len(data)-1] #Para quitar el header y el footer, que son¿?
+        data = data[10:len(data)-1] #Para quitar el header y el footer, que son qué¿?
         muestra = np.array(data)
         lista_sample = []
         
@@ -355,32 +297,32 @@ class MainWindow(Tk):
         timeoffset = float(self.myScope.query(":TIM:OFFS?"))
         timescale = float(self.myScope.query(":TIM:SCAL?"))
         time = np.linspace(timeoffset * timescale, 0.0000005+50e-09 * timescale, num=len(y))
-        self.power_curve.set_data(time,y) #Importante, es el que pone la data
-        ###Esto debe variar según las cuentas y los canales que me dijo Isaac
-        #self.plasma_curve2.set_data(time, y)
-        self.energy_per_pulse_curve.set_data(time, y)
-        self.total_energy_curve.set_data(time, y)
+
         self.voltage = y
         self.tiemposave = time
+
+        self.power_curve.set_data(time,y) #Importante, es el que pone la data
+        self.energy_per_pulse_curve.set_data(time, y)
+        self.total_energy_curve.set_data(time, y)
         
         if(self.status == 1):
             if(self.selected_tab() == 0):
                 animation.FuncAnimation(self.fig, self.draw_graphic, interval = 10, blit = False)
                 self.canvas.draw()
-                print("Estoy en el 0")
+                print("Estoy en el 0") #TODO: eliminar
             elif(self.selected_tab() == 1):
                 animation.FuncAnimation(self.fig2, self.draw_graphic, interval = 10, blit = False)
                 self.canvas2.draw()
-                print("Estoy en el 1")
+                print("Estoy en el 1") #TODO: eliminar
             elif(self.selected_tab() == 2):
                 animation.FuncAnimation(self.fig3, self.draw_graphic, interval = 10, blit = False)
                 self.canvas3.draw()
-                print("Estoy en el 2")
+                print("Estoy en el 2") #TODO: eliminar
             elif(self.selected_tab() == 3):
                 animation.FuncAnimation(self.fig4, self.draw_graphic, interval = 10, blit = False)
                 self.canvas4.draw()
-                print("Estoy en el 3")
+                print("Estoy en el 3") #TODO: eliminar
             elif(self.selected_tab() == 4):
                 animation.FuncAnimation(self.fig5, self.draw_graphic, interval = 10, blit = False)
                 self.canvas5.draw()
-                print("Estoy en el 4")
+                print("Estoy en el 4") #TODO: eliminar
