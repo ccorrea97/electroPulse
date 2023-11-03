@@ -236,12 +236,12 @@ class MainWindow(Tk):
         ############### Curva Plasma 2 (Toma el ch1 como 'y' y ch2 como 'x' - (y, x))
         self.myScope.write("WAV:SOUR CHAN1")
 
-        data1 = self.myScope.query("WAV:DATA?") #Datos extraidos
+        data_y = self.myScope.query("WAV:DATA?") #Datos extraidos
         #print(data) #TODO: eliminar
-        data1 = data1.split(',')
-        data1 = list(data1)
-        data1 = data1[10:len(data1)-1]
-        muestra = np.array(data1)
+        data_y = data_y.split(',')
+        data_y = list(data_y)
+        data_y = data_y[10:len(data_y)-1]
+        muestra = np.array(data_y)
         lista_sample = []
         for k in range(len(muestra)-1):
             lista_sample.append(float(muestra[k]))
@@ -250,21 +250,47 @@ class MainWindow(Tk):
         y = [float(x) for x in lista_sample]
 
         self.myScope.write("WAV:SOUR CHAN2")
-        xoffset = float(self.myScope.query(":TIM:OFFS?"))
-        xscale = float(self.myScope.query(":TIM:SCAL?"))
-        x = np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
-        self.plasma_curve2.set_data(x, y)
+        data_x = self.myScope.query("WAV:DATA?") #Datos extraidos
+        print(data_x) #TODO: eliminar
+        data_x = data_x.split(',')
+        data_x = list(data_x)
+        data_x = data_x[10:len(data_x)-1]
+        muestra = np.array(data_x)
+        lista_sample = []
+        for k in range(len(muestra)-1):
+            lista_sample.append(float(muestra[k]))
+
+        x = [float(i) for i in lista_sample]
+        #Parametros Y graficar limpiar - Voltage
+        #x = np.linspace([float(y) for y in lista_sample], num=len(y))
+        # xoffset = float(self.myScope.query(":TIM:OFFS?"))
+        # print(xoffset)
+        # xscale = float(self.myScope.query(":TIM:SCAL?"))
+        # print(xscale)
+        # print(xoffset * xscale)
+        # print(0.0000005+50e-09 * xscale)
+        # x = np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
+
+        # x =[5, 7, 8, 7, 2, 17, 2, 9,
+        # 4, 11, 12, 9, 6] 
+    
+        # y =[5, 7, 8, 7, 2, 17, 2, 9,
+        # 4, 11, 12, 9, 6]
+        
+        plt.scatter(x, y, c ="blue")
+        plt.show()
+        #self.plasma_curve2.set_data(x, y)
         ###############
 
-        ############### Curva Plasma 1 (Toma el ch2 como 'y' y el ch1 como 'x' - (y, x))
+        ############### Curva Plasma 1 (Toma el ch2 como 'y' y el ch1 (z) como 'x' - (y, x))
         self.myScope.write("WAV:SOUR CHAN2")
 
-        data1 = self.myScope.query("WAV:DATA?") #Datos extraidos
+        data_y = self.myScope.query("WAV:DATA?") #Datos extraidos
         #print(data) #TODO: eliminar
-        data1 = data1.split(',')
-        data1 = list(data1)
-        data1 = data1[10:len(data1)-1]
-        muestra = np.array(data1)
+        data_y = data_y.split(',')
+        data_y = list(data_y)
+        data_y = data_y[10:len(data_y)-1]
+        muestra = np.array(data_y)
         lista_sample = []
         for k in range(len(muestra)-1):
             lista_sample.append(float(muestra[k]))
@@ -279,13 +305,37 @@ class MainWindow(Tk):
         self.plasma_curve1.set_data(x, y)
         ###############
 
+        ############### Curva Potencia ((ch1 * ch2) como 'y' y el tiempo como 'x' - (y, x))
+        # Tomar el Y del ch1 y el Y del ch2
+        self.myScope.write("WAV:SOUR CHAN2")
+
+        data_y = self.myScope.query("WAV:DATA?") #Datos extraidos
+        #print(data) #TODO: eliminar
+        data_y = data_y.split(',')
+        data_y = list(data_y)
+        data_y = data_y[10:len(data_y)-1]
+        muestra = np.array(data_y)
+        lista_sample = []
+        for k in range(len(muestra)-1):
+            lista_sample.append(float(muestra[k]))
+
+        #Parametros Y graficar limpiar - Voltage
+        y = [float(x) for x in lista_sample]
+
+        self.myScope.write("WAV:SOUR CHAN1")
+        xoffset = float(self.myScope.query(":TIM:OFFS?"))
+        xscale = float(self.myScope.query(":TIM:SCAL?"))
+        x = np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
+        self.power_curve.set_data(x, y)
+        ###############
+
         ############### Genérico para los otros tres gráficos que falta armar
         self.myScope.write("WAV:SOUR CHAN2")
-        data = self.myScope.query("WAV:DATA?")
-        data = data.split(',')
-        data = list(data)
-        data = data[10:len(data)-1] #Para quitar el header y el footer, que son qué¿?
-        muestra = np.array(data)
+        data_y = self.myScope.query("WAV:DATA?")
+        data_y = data_y.split(',')
+        data_y = list(data_y)
+        data_y = data_y[10:len(data_y)-1] #Para quitar el header y el footer, que son qué¿?
+        muestra = np.array(data_y)
         lista_sample = []
         
         for k in range(len(muestra)-1):
