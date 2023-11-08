@@ -1,7 +1,7 @@
 from mainWindow import MainWindow
-
+from graphMaker import GraphMaker
 def main():
-        app = MainWindow()
+        app = GraphMaker() #MainWindow()
 
         def call_update():
                 global update, update_after
@@ -9,7 +9,7 @@ def main():
 
         def update_test():
                 global update, update_after
-                app.draw_graphic()
+                app.draw_graph() #app.draw_graphic()
                 update_after = app.after(100, update_test)
 
         call_update()

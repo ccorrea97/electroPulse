@@ -223,10 +223,7 @@ class MainWindow(Tk):
         
         OSC_NAME = usb[0]
         print(OSC_NAME)
-        self.myScope = resource_manager.open_resource(OSC_NAME)
-        resource_manager = visa.ResourceManager()
-        instruments = resource_manager.list_resources()
-        usb = list(filter(lambda x: 'USB' in x, instruments))       
+        self.myScope = resource_manager.open_resource(OSC_NAME)    
 
     def draw_graphic(self): # TODO: hacer una función con parámetros para evitar la repetición de código
         
