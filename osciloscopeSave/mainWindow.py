@@ -274,8 +274,8 @@ class MainWindow(Tk):
         # y =[5, 7, 8, 7, 2, 17, 2, 9,
         # 4, 11, 12, 9, 6]
         
-        plt.scatter(x, y, c ="blue")
-        plt.show()
+        # plt.scatter(x, y, c ="blue")
+        # plt.show()
         #self.plasma_curve2.set_data(x, y)
         ###############
 

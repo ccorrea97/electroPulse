@@ -18,6 +18,7 @@ class GraphMaker(Tk):
 
         self.myScope = self.open_oscilloscope()
         self.open_oscilloscope()
+        self.canvas_plot()
         
 
 
@@ -66,7 +67,7 @@ class GraphMaker(Tk):
     
     def draw_graph(self):
         
-        if (False): #(curva plasma 2)
+        if (True): #(curva plasma 2)
             self.curva_plasma2()
         elif (False): #(curva plasma 1)
             self.curva_plasma1()
@@ -121,7 +122,6 @@ class GraphMaker(Tk):
         xscale = float(self.myScope.query(":TIM:SCAL?"))
         x = np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
 
-        self.canvas_plot()
         self.graph.set_data(x, y)
 
 
