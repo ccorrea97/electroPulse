@@ -18,8 +18,11 @@ class GraphMaker(Tk):
         self.myScope = self.open_oscilloscope()
         self.open_oscilloscope()
         self.fig, self.ax = plt.subplots()
-        self.create_plot()
+        self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
+        self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
+        #self.create_plot()
         self.graph, = self.ax.plot([], [], color='darkblue')
+        self.axs = self.fig.add_subplot(111)
         
 
     
@@ -39,9 +42,6 @@ class GraphMaker(Tk):
         plt.title("RIGOL MSO8204 Real Time", color= 'darkblue', size=18, family="Arial")
         plt.xlabel("Channel 2", color= 'darkblue', size=18, family="Arial")
         plt.ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
-
-        self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
-        self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
     
     # Gráfico de puntos
     # def canvas_scatter(self, x, y):
@@ -61,7 +61,7 @@ class GraphMaker(Tk):
         
         if (False): #(curva plasma 2)
             self.curva_plasma2()
-        elif (False): #(curva plasma 1)
+        elif (True): #(curva plasma 1)
             self.curva_plasma1()
         elif (False): #(curva potencia)
             self.curva_potencia()
@@ -72,6 +72,7 @@ class GraphMaker(Tk):
         elif (False): #(curva diferencia)
             self.curva_diferencia_pulsos()
         elif (True): #(tensión vs corriente -default)
+            animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
             self.curva_tension_corriente()
         
         #plt.scatter(x, y, c = "blue")
@@ -87,16 +88,15 @@ class GraphMaker(Tk):
     def curva_plasma2(self):
         x = self.osciloscope_data(2)
         y = self.osciloscope_data(1)
-        # if not hasattr(self, 'graphS'):
-        #     self.canvas_scatter(x, y)
         self.graph.set_data(x, y)
-        #self.graphS.set_offsets(np.column_stack((x, y))) 
         self.canvas.draw()
 
     def curva_plasma1(self):
         x = self.osciloscope_data(1)
         y = self.osciloscope_data(2)
-        self.canvas_scatter(x, y)
+        self.axs.cla()
+        self.axs.scatter(x, y, color='darkblue')
+        self.canvas.draw()
 
     def curva_potencia():
         a = ""
@@ -126,10 +126,9 @@ class GraphMaker(Tk):
         return np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
 
     def osciloscope_data(self, channel):
-        print("Entro a osciloscope_data")
         self.myScope.write(":WAVEFORM:FORMAT ASCII")
         self.myScope.write(f"WAV:SOUR CHAN{channel}")
-        data = self.myScope.query("WAV:DATA?") #Datos extraidos
+        data = self.myScope.query("WAV:DATA?")
         data = data.split(',')
         data = list(data)
         data = data[10:len(data)-1]
