@@ -56,36 +56,10 @@ class GraphMaker(Tk):
 
     #     self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
     #     self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
-    def canvas_scatter(self, x, y):
-        self.fig = plt.Figure(figsize=(5, 4), dpi=100)
-        self.ax = self.fig.add_subplot()
-        self.ax.scatter(x, y, color="green")
-        self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
-        self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
-        self.ax.set_ylim(-10, 20) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
-        self.ax.set_xlim(0, 500e-09)
-        self.fig.patch.set_facecolor('lightblue')
-        #Contorno de grafico
-        self.ax.spines['bottom'].set_color('darkblue')
-        self.ax.spines['top'].set_color('darkblue')
-        self.ax.spines['left'].set_color('darkblue')
-        self.ax.spines['right'].set_color('darkblue')
-        #Color de ejes
-        self.ax.tick_params(axis='x', colors='darkblue')
-        self.ax.tick_params(axis='y', colors='darkblue')
-        self.ax.set_title("RIGOL MSO8204 Real Time", color='darkblue', size=18, family="Arial")
-        self.ax.set_xlabel("Channel 2", color='darkblue', size=18, family="Arial")
-        self.ax.set_ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
-
-        # self.graphS = self.ax.scatter([], [], color='darkblue')
-        # print(self.graphS)
-        #self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
-        #self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
-    #     print("Salgo canvas_scatter")
     
     def draw_graph(self): 
         
-        if (True): #(curva plasma 2)
+        if (False): #(curva plasma 2)
             self.curva_plasma2()
         elif (False): #(curva plasma 1)
             self.curva_plasma1()
@@ -97,7 +71,7 @@ class GraphMaker(Tk):
             self.curva_energia_total()
         elif (False): #(curva diferencia)
             self.curva_diferencia_pulsos()
-        elif (False): #(tensión vs corriente -default)
+        elif (True): #(tensión vs corriente -default)
             self.curva_tension_corriente()
         
         #plt.scatter(x, y, c = "blue")
@@ -142,6 +116,7 @@ class GraphMaker(Tk):
         x = self.get_time_axis(1)
 
         self.graph.set_data(x, y)
+        self.canvas.draw()
 
     def get_time_axis(self, channel):
         y = self.osciloscope_data(channel)
