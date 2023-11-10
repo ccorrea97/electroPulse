@@ -1,12 +1,11 @@
 import sys
 import tkinter as tk
-from tkinter import ttk, Tk, Menu
+from tkinter import ttk, Tk
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 import pyvisa as visa
-import pandas as pd
 
 class GraphMaker(Tk):
     def __init__(self):
@@ -18,54 +17,73 @@ class GraphMaker(Tk):
 
         self.myScope = self.open_oscilloscope()
         self.open_oscilloscope()
-        self.canvas_plot()
+        self.fig, self.ax = plt.subplots()
+        self.create_plot()
+        self.graph, = self.ax.plot([], [], color='darkblue')
         
 
-
-
-    
-
-   
-    
     
     # Gráfico de curvas
-    def canvas_plot(self):
-        self.fig, ax = plt.subplots()
-        ax.set_ylim(-10, 20) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
-        ax.set_xlim(0, 500e-09) #Por esto muestra el e-07 por el 500
+    def create_plot(self):
+        self.ax.set_ylim(-10, 20) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
+        self.ax.set_xlim(0, 500e-09) #Por esto muestra el e-07 por el 500
         self.fig.patch.set_facecolor('lightblue')
         #Contorno de grafico
-        ax.spines['bottom'].set_color('darkblue')
-        ax.spines['top'].set_color('darkblue')
-        ax.spines['left'].set_color('darkblue')
-        ax.spines['right'].set_color('darkblue')
+        self.ax.spines['bottom'].set_color('darkblue')
+        self.ax.spines['top'].set_color('darkblue')
+        self.ax.spines['left'].set_color('darkblue')
+        self.ax.spines['right'].set_color('darkblue')
         #Color de ejes
-        ax.tick_params(axis='x', colors='darkblue')
-        ax.tick_params(axis='y', colors='darkblue')
+        self.ax.tick_params(axis='x', colors='darkblue')
+        self.ax.tick_params(axis='y', colors='darkblue')
         plt.title("RIGOL MSO8204 Real Time", color= 'darkblue', size=18, family="Arial")
         plt.xlabel("Channel 2", color= 'darkblue', size=18, family="Arial")
         plt.ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
-
-        self.graph, = ax.plot([], [], color='darkblue')
 
         self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
         self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
     
     # Gráfico de puntos
+    # def canvas_scatter(self, x, y):
+    #     self.fig = plt.Figure(figsize=(5, 4), dpi=100)
+    #     self.ax = self.fig.add_subplot(111)
+    #     self.ax.scatter(x, y, color='g')
+    #     scatter = FigureCanvasTkAgg(self.fig, self.root_frame)
+    #     scatter.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+    #     self.ax.set_ylabel('Tensión')
+    #     self.ax.set_xlabel('Corriente')
+    #     self.ax.set_title('Gráficos en tiempo real')
+
+    #     self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
+    #     self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
     def canvas_scatter(self, x, y):
         self.fig = plt.Figure(figsize=(5, 4), dpi=100)
-        self.ax = self.fig.add_subplot(111)
-        self.ax.scatter(x, y, color='g')
-        scatter = FigureCanvasTkAgg(self.fig, self.root_frame)
-        scatter.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
-        self.ax.set_ylabel('Tensión')
-        self.ax.set_xlabel('Corriente')
-        self.ax.set_title('Gráficos en tiempo real')
-
+        self.ax = self.fig.add_subplot()
+        self.ax.scatter(x, y, color="green")
         self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
         self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
+        self.ax.set_ylim(-10, 20) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
+        self.ax.set_xlim(0, 500e-09)
+        self.fig.patch.set_facecolor('lightblue')
+        #Contorno de grafico
+        self.ax.spines['bottom'].set_color('darkblue')
+        self.ax.spines['top'].set_color('darkblue')
+        self.ax.spines['left'].set_color('darkblue')
+        self.ax.spines['right'].set_color('darkblue')
+        #Color de ejes
+        self.ax.tick_params(axis='x', colors='darkblue')
+        self.ax.tick_params(axis='y', colors='darkblue')
+        self.ax.set_title("RIGOL MSO8204 Real Time", color='darkblue', size=18, family="Arial")
+        self.ax.set_xlabel("Channel 2", color='darkblue', size=18, family="Arial")
+        self.ax.set_ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
+
+        # self.graphS = self.ax.scatter([], [], color='darkblue')
+        # print(self.graphS)
+        #self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
+        #self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
+    #     print("Salgo canvas_scatter")
     
-    def draw_graph(self):
+    def draw_graph(self): 
         
         if (True): #(curva plasma 2)
             self.curva_plasma2()
@@ -79,14 +97,14 @@ class GraphMaker(Tk):
             self.curva_energia_total()
         elif (False): #(curva diferencia)
             self.curva_diferencia_pulsos()
-        elif (True): #(tensión vs corriente -default)
+        elif (False): #(tensión vs corriente -default)
             self.curva_tension_corriente()
         
         #plt.scatter(x, y, c = "blue")
         #self.graph.set_data(x, y) #plt.show()
         
-        animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
-        self.canvas.draw()
+        #animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
+        
 
         if(False):
             animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
@@ -95,7 +113,11 @@ class GraphMaker(Tk):
     def curva_plasma2(self):
         x = self.osciloscope_data(2)
         y = self.osciloscope_data(1)
-        self.canvas_scatter(x, y)
+        # if not hasattr(self, 'graphS'):
+        #     self.canvas_scatter(x, y)
+        self.graph.set_data(x, y)
+        #self.graphS.set_offsets(np.column_stack((x, y))) 
+        self.canvas.draw()
 
     def curva_plasma1(self):
         x = self.osciloscope_data(1)
@@ -115,18 +137,21 @@ class GraphMaker(Tk):
         a = ""
     
     def curva_tension_corriente(self):
+        #Todo en el canal 1
         y = self.osciloscope_data(1)
-
-        self.myScope.write("WAV:SOUR CHAN1")
-        xoffset = float(self.myScope.query(":TIM:OFFS?"))
-        xscale = float(self.myScope.query(":TIM:SCAL?"))
-        x = np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
+        x = self.get_time_axis(1)
 
         self.graph.set_data(x, y)
 
-
+    def get_time_axis(self, channel):
+        y = self.osciloscope_data(channel)
+        self.myScope.write(f"WAV:SOUR CHAN{channel}")
+        xoffset = float(self.myScope.query(":TIM:OFFS?"))
+        xscale = float(self.myScope.query(":TIM:SCAL?"))
+        return np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
 
     def osciloscope_data(self, channel):
+        print("Entro a osciloscope_data")
         self.myScope.write(":WAVEFORM:FORMAT ASCII")
         self.myScope.write(f"WAV:SOUR CHAN{channel}")
         data = self.myScope.query("WAV:DATA?") #Datos extraidos
