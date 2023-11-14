@@ -20,14 +20,16 @@ class GraphMaker(Tk):
         self.fig, self.ax = plt.subplots()
         self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
         self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
-        #self.create_plot()
-        self.graph, = self.ax.plot([], [], color='darkblue')
+        #self.create_plot() #TODO: delete
         self.axs = self.fig.add_subplot(111)
-        
+        self.graph, = self.ax.plot([], [], color='darkblue')
 
-    
+    #TODO: delete
+    #No lo estoy llamando en ningún lado y anda
     # Gráfico de curvas
     def create_plot(self):
+        self.fig, self.ax = plt.subplots()
+        
         self.ax.set_ylim(-10, 20) #Consultar cuál sería la escala ideal, si vamos a trabajar con pequeños voltajes o muy grandes
         self.ax.set_xlim(0, 500e-09) #Por esto muestra el e-07 por el 500
         self.fig.patch.set_facecolor('lightblue')
@@ -42,27 +44,18 @@ class GraphMaker(Tk):
         plt.title("RIGOL MSO8204 Real Time", color= 'darkblue', size=18, family="Arial")
         plt.xlabel("Channel 2", color= 'darkblue', size=18, family="Arial")
         plt.ylabel("Channel 1", color= 'darkblue', size=18, family="Arial")
-    
-    # Gráfico de puntos
-    # def canvas_scatter(self, x, y):
-    #     self.fig = plt.Figure(figsize=(5, 4), dpi=100)
-    #     self.ax = self.fig.add_subplot(111)
-    #     self.ax.scatter(x, y, color='g')
-    #     scatter = FigureCanvasTkAgg(self.fig, self.root_frame)
-    #     scatter.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
-    #     self.ax.set_ylabel('Tensión')
-    #     self.ax.set_xlabel('Corriente')
-    #     self.ax.set_title('Gráficos en tiempo real')
 
-    #     self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
-    #     self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
+        self.graph, = self.ax.plot([], [], color='darkblue')
+
+        self.canvas = FigureCanvasTkAgg(self.fig, master = self.root_frame)
+        self.canvas.get_tk_widget().pack(padx = 2, pady = 0, expand = True, fill = 'x')
     
     def draw_graph(self): 
         
-        if (False): #(curva plasma 2)
-            self.curva_plasma2()
-        elif (True): #(curva plasma 1)
-            self.curva_plasma1()
+        if (True): #(curva plasma 2)
+            self.curva_plasma2() #Bien
+        elif (False): #(curva plasma 1)
+            self.curva_plasma1() #Bien
         elif (False): #(curva potencia)
             self.curva_potencia()
         elif (False): #(curva per pulse)
@@ -72,15 +65,9 @@ class GraphMaker(Tk):
         elif (False): #(curva diferencia)
             self.curva_diferencia_pulsos()
         elif (True): #(tensión vs corriente -default)
-            animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
-            self.curva_tension_corriente()
+            self.curva_tension_corriente() #No hace el gráfico correspondiente
         
-        #plt.scatter(x, y, c = "blue")
-        #self.graph.set_data(x, y) #plt.show()
-        
-        #animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
-        
-
+        #TODO: delete
         if(False):
             animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
             self.canvas.draw()
@@ -88,7 +75,8 @@ class GraphMaker(Tk):
     def curva_plasma2(self):
         x = self.osciloscope_data(2)
         y = self.osciloscope_data(1)
-        self.graph.set_data(x, y)
+        self.axs.cla()
+        self.axs.scatter(x, y, color='darkblue')
         self.canvas.draw()
 
     def curva_plasma1(self):
@@ -116,6 +104,7 @@ class GraphMaker(Tk):
         x = self.get_time_axis(1)
 
         self.graph.set_data(x, y)
+        animation.FuncAnimation(self.fig, self.draw_graph, interval = 10, blit = False)
         self.canvas.draw()
 
     def get_time_axis(self, channel):
@@ -123,21 +112,42 @@ class GraphMaker(Tk):
         self.myScope.write(f"WAV:SOUR CHAN{channel}")
         xoffset = float(self.myScope.query(":TIM:OFFS?"))
         xscale = float(self.myScope.query(":TIM:SCAL?"))
+        print(f"xscale: {xscale}")
+        print(f"xoffset: {xoffset}")
         return np.linspace(xoffset * xscale, 0.0000005+50e-09 * xscale, num=len(y))
 
     def osciloscope_data(self, channel):
         self.myScope.write(":WAVEFORM:FORMAT ASCII")
         self.myScope.write(f"WAV:SOUR CHAN{channel}")
-        data = self.myScope.query("WAV:DATA?")
+        data = self.myScope.query("WAV:DATA?") #Marco: ver acá tema de formato, para ver cuántos puntos tomar -por
+        #print(data)
         data = data.split(',')
         data = list(data)
         data = data[10:len(data)-1]
-        muestra = np.array(data)
-        lista_sample = []
-        for k in range(len(muestra)-1):
-            lista_sample.append(float(muestra[k]))
+        #Idea Marco: pasar directamente al float con numpy y evitar pasar a mano
+        #muestra = np.fromstring(data, dtype = float, sep = ',') #ver cómo estaba
+        muestra = np.array(data).astype(float)
+        print(muestra)
+        # lista_sample = [] #TODO: delete
+        # for k in range(len(muestra)-1): #TODO: delete
+        #     lista_sample.append(float(muestra[k])) #TODO: delete
+        #print([float(i) for i in lista_sample]) #TODO: delete
+        return muestra
 
-        return [float(i) for i in lista_sample]
+        #TODO: delete
+        
+        # self.myScope.write(":WAVEFORM:FORMAT ASCII")
+        # self.myScope.write(f"WAV:SOUR CHAN{channel}")
+        # data = self.myScope.query("WAV:DATA?") #Datos extraidos
+        # data = data.split(',')
+        # data = list(data)
+        # data = data[10:len(data)-1]
+        # muestra = np.array(data)
+        # lista_sample = []
+        # for k in range(len(muestra)-1):
+        #     lista_sample.append(float(muestra[k]))
+
+        # return [float(i) for i in lista_sample]
 
     def open_oscilloscope(self):
         resource_manager = visa.ResourceManager()
