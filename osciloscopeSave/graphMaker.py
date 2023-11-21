@@ -152,6 +152,7 @@ class GraphMaker(Tk):
     def open_oscilloscope(self):
         resource_manager = visa.ResourceManager()
         instruments = resource_manager.list_resources()
+        print(instruments)
         usb = list(filter(lambda x: 'USB' in x, instruments))
         
         if len(usb) < 1:
